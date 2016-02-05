@@ -122,7 +122,7 @@ print "Deleting old table OI_Key_Stats2"
 cursor.execute("Drop table if exists oi_key_stats2;")
 print "Creating new table Oi_Key_Stats2 "
 cursor.execute("create table oi_key_stats2 (month date, cum_total_users int, new_confirmed int, new_users int, cancelled_users int, active_users int, fake_emails int, opened_app int, Cum_total_app_na int);")
-print "Copying LRS CSV data from S3 to Oi_Key_Stats_2 "
+print "Copying Oi Reporting CSV data from S3 to Oi_Key_Stats_2 "
 cursor.execute("COPY oi_key_stats2  FROM 's3://bibusuu/OI_Reporting/'  CREDENTIALS 'aws_access_key_id=%s;aws_secret_access_key=%s' CSV;" % (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY))
 print "Dropping Table Oi_Key_Stats "
 cursor.execute("DROP TABLE if exists Oi_Key_Stats;")

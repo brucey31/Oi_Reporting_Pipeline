@@ -8,10 +8,10 @@ import csv
 from subprocess import call
 import psycopg2
 
-start_date = datetime.date(2015, 5, 1)
+start_date = datetime.date(2014, 5, 1)
 
-end_date = datetime.date(2015, 8, 1)
-#end_date = datetime.date.today()
+#end_date = datetime.date(2015, 8, 1)
+end_date = datetime.date.today()
 
 config = configparser.ConfigParser()
 ini = config.read('conf2.ini')

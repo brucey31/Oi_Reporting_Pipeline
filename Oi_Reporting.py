@@ -33,7 +33,7 @@ with open('OI_report.csv', 'wb') as csvfile:
 
 
     # Open database connection
-    db = MySQLdb.connect(HOST, USER, PASSWORD, "busuudata")
+    db = MySQLdb.connect(host =HOST, user =USER, passwd= PASSWORD, db ="busuudata")
 
     # prepare a cursor object using cursor() method
     cursor = db.cursor()

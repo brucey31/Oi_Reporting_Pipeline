@@ -49,7 +49,7 @@ with open('OI_report.csv', 'wb') as csvfile:
 
 
         # TOTAL NUMBER OF OI USERS
-        cursor.execute("SELECT count(DISTINCT mpa.uid) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.start <= '%s' AND mpa.partner = 'oi' AND mpa.msisdn like '55%s' AND mpas.current =1;" % (end,"%"))
+        cursor.execute("SELECT count(DISTINCT mpa.uid) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.start <= '%s' AND mpa.partner = 'oi' AND mpa.msisdn like '55%s' AND mpas.current =1;" % (end, "%"))
         data = cursor.fetchone()
         print 'Number of registered Oi users at %s was ' % end + (str(data).replace("L,)","")).replace("(","")
         list.append(int((str(data).replace("L,)","")).replace("(","")))

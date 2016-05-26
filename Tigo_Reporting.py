@@ -61,7 +61,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of cumilative registered Tigo users at %s was ' % end + str(row).replace("L,", "").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("total_cum_num")
+            list.append("total_cumilative_users")
             writer.writerow(list)
 
         # TOTAL NUMBER OF NEW USERS WITH CONFIRMED EMAIL
@@ -78,7 +78,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of registered Tigo users with confirmed email at %s was ' % end + str(row).replace("L,", "").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("total_confirmed_email")
+            list.append("total_users_confirmed_email")
             writer.writerow(list)
 
         # TOTAL NUMBER OF NEW TIGO USERS
@@ -95,7 +95,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of newly registered Tigo users at %s was ' % end + str(row).replace("L,", "").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("total_num")
+            list.append("total_new_users")
             writer.writerow(list)
 
         # TOTAL NUMBER OF tigo USERS REQUESTED TO CANCEL
@@ -129,7 +129,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of registered Tigo users that do not have a validated email at %s was ' % end + str(row).replace("L,", "").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("total_num_owe_money")
+            list.append("total_no_valid_email")
             writer.writerow(list)
 
         # TOTAL NUMBER OF Tigo USERS THAT HAVE OPENED THE APP

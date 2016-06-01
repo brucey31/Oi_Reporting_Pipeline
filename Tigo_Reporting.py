@@ -82,7 +82,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             writer.writerow(list)
 
         # TOTAL NUMBER OF NEW TIGO USERS
-        cursor.execute("SELECT substring(mpa.msisdn, 1,3), count(DISTINCT mpa.uid)FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.start >= '%s' AND mpas.start < '%s' AND mpa.partner = 'tigo' AND mpas.unsubscribed IS NULL AND mpas.provider_plan != 2 AND mpas.current = 1 group by 1;" % (beginning,end))
+        cursor.execute("SELECT substring(mpa.msisdn, 1,3), count(DISTINCT mpa.msisdn)FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id WHERE mpas.start >= '%s' AND mpas.start < '%s' AND mpa.partner = 'tigo' AND mpas.unsubscribed IS NULL AND mpas.provider_plan != 2 AND mpas.current = 1 group by 1;" % (beginning,end))
         data = cursor.fetchall()
         for row in data:
             list = []

@@ -48,7 +48,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
         print "Calculating for month starting " + str(beginning) + " and ending on " + str(end) + "\n"
 
         # TOTAL CUMILATIVE NUMBER OF TIGO USERS
-        cursor.execute("SELECT substring(mpa.msisdn, 1,3), count(DISTINCT mpa.uid) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id where mpas.start <= '%s' AND mpa.partner = 'tigo' AND mpas.provider_plan != 2 AND mpas.current = 1 group by 1;" % end)
+        cursor.execute("SELECT substring(mpa.msisdn,1,3),count(distinct mpa.msisdn) as cnt FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id WHERE mpas.start < '%s' AND mpa.partner = 'tigo' AND mpas.current = 1 AND mpas.provider_plan != 2 GROUP BY 1;" % end)
         data = cursor.fetchall()
         for row in data:
             list = []
@@ -64,7 +64,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             list.append("total_cumilative_users")
             writer.writerow(list)
 
-        # TOTAL NUMBER OF NEW USERS WITH CONFIRMED EMAIL
+        # TOTAL NUMBER OF NEW TIGO USERS WITH CONFIRMED EMAIL
         cursor.execute("SELECT substring(mpa.msisdn, 1,3), count(DISTINCT mpa.msisdn) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.provider_plan != 2 AND mpas.unsubscribed IS NULL  AND mpas.start <= '%s' AND mpa.partner = 'tigo' AND mpas.current = 1 group by 1;" % end)
         data = cursor.fetchall()
         for row in data:
@@ -98,8 +98,8 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             list.append("total_new_users")
             writer.writerow(list)
 
-        # TOTAL NUMBER OF tigo USERS REQUESTED TO CANCEL
-        cursor.execute("SELECT substring(mpa.msisdn, 1,3), COUNT(DISTINCT mpa.msisdn) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id  where mpas.unsubscribed >= '%s' AND mpas.unsubscribed <= '%s' AND mpa.partner = 'tigo' AND mpas.current = 1 AND mpas.provider_plan != 2 group by 1;" % (beginning,end))
+        # TOTAL NUMBER OF TIGO USERS REQUESTED TO CANCEL
+        cursor.execute("SELECT substring(mpa.msisdn,1,3),count(distinct mpa.msisdn)  FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id WHERE mpas.unsubscribed >= '%s' AND mpas.unsubscribed < '%s' AND mpa.partner = 'tigo' AND mpas.current = 1 AND mpas.provider_plan != 2 GROUP BY 1" % (beginning, end))
         data = cursor.fetchall()
         for row in data:
             list = []
@@ -116,7 +116,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             writer.writerow(list)
 
         # TOTAL NUMBER OF TIGO USERS THAT DO NOT HAVE A VALIDATED EMAIL
-        cursor.execute("SELECT substring(mpa.msisdn, 1,3), count(mpa.msisdn) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id WHERE mpas.start <= '%s' AND mpas.unsubscribed IS NULL AND mpa.uid IS NULL AND mpa.partner = 'tigo' AND mpas.current = 1 AND mpas.provider_plan != 2 GROUP BY 1" % end)
+        cursor.execute("SELECT substring(mpa.msisdn,1,3),count(distinct mpa.msisdn) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id WHERE mpas.start < '%s' AND mpas.unsubscribed IS NULL AND mpa.uid IS NULL AND mpa.partner = 'tigo' AND mpas.current = 1 AND mpas.provider_plan != 2 GROUP BY 1;" % end)
         data = cursor.fetchall()
         for row in data:
             list = []
@@ -133,7 +133,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             writer.writerow(list)
 
         # TOTAL NUMBER OF Tigo USERS THAT HAVE OPENED THE APP
-        cursor.execute("SELECT mpa.uid, mpa.msisdn, mpas.start, mpas.end, mpas.unsubscribed, u.mail FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u on u.uid = mpa.uid WHERE mpas.start <= '%s' AND mpas.unsubscribed IS NULL AND mpa.partner = 'tigo' AND u.access >= '%s' AND u.access < '%s' AND mpas.current = 1 AND mpas.provider_plan != 2 GROUP BY mpa.uid;" % (end, beginning, end))
+        cursor.execute("SELECT substring(mpa.msisdn,1,3),count(distinct mpa.uid) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u on u.uid = mpa.uid WHERE mpas.start < '%s' AND mpas.unsubscribed IS NULL AND mpa.partner = 'tigo' AND date(from_unixtime(u.access)) >= '%s' AND date(from_unixtime(u.access)) < '%s' AND mpas.current = 1 AND mpas.provider_plan != 2 GROUP BY 1;" % (end, beginning, end))
         data = cursor.fetchall()
         for row in data:
             list = []

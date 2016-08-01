@@ -55,7 +55,7 @@ with open('OI_report.csv', 'wb') as csvfile:
         list.append(int((str(data).replace("L,)","")).replace("(","")))
 
         # TOTAL NUMBER OF NEW USERS WITH CONFIRMED EMAIL
-        cursor.execute("SELECT count(DISTINCT mpa.msisdn) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.unsubscribed IS NULL AND mpas.start >= '%s' AND mpas.start < '%s' AND mpa.partner = 'oi' AND u.mail NOT LIKE '%soibusuu%s' AND mpa.msisdn like '55%s' AND mpas.current = 1;" % (beginning, end, "%", "%", "%"))
+        cursor.execute("SELECT count(DISTINCT mpa.msisdn) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.unsubscribed IS NULL AND mpas.start <= '%s' AND mpas.end >= '%s' AND mpa.partner = 'oi' AND u.mail NOT LIKE '%soibusuu%s' AND mpa.msisdn like '55%s' AND mpas.current = 1;" % (end, beginning, "%", "%", "%"))
         data = cursor.fetchone()
         print 'Number of new oi users with confirmed email addresses between %s and %s was ' % (beginning, end) + (str(data).replace("L,)","")).replace("(","")
         list.append(int((str(data).replace("L,)","")).replace("(","")))
@@ -73,13 +73,13 @@ with open('OI_report.csv', 'wb') as csvfile:
         list.append(int((str(data).replace("L,)","")).replace("(","")))
 
         # TOTAL NUMBER OF OI USERS THAT OWE US MONEY
-        cursor.execute("SELECT count(distinct `msisdn`) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.start < '%s' AND mpas.end >= '%s' AND mpas.unsubscribed IS NULL AND mpa.partner = 'oi' AND mpa.msisdn like '55%s' AND mpas.current = 1;" % (beginning, end, "%"))
+        cursor.execute("SELECT count(distinct `msisdn`) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.start < '%s' AND mpas.end >= '%s' AND mpas.unsubscribed IS NULL AND mpa.partner = 'oi' AND mpa.msisdn like '55%s' AND mpas.current = 1;" % (end, beginning, "%"))
         data = cursor.fetchone()
         print 'Number of oi users that owe us money between %s and %s was ' % (beginning, end) + (str(data).replace("L,)","")).replace("(","")
         list.append(int((str(data).replace("L,)","")).replace("(","")))
 
         # TOTAL NUMBER OF OI USERS THAT HAVE A FAKE EMAIL ADDRESS
-        cursor.execute("SELECT count(DISTINCT mpa.msisdn) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.unsubscribed IS NULL AND mpas.start >= '%s' AND mpas.start < '%s' AND mpa.partner = 'oi' AND u.mail LIKE '%soibusuu%s' AND mpa.msisdn like '55%s' AND mpas.current = 1;" % (beginning, end, "%","%","%"))
+        cursor.execute("SELECT count(DISTINCT mpa.msisdn) FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id LEFT JOIN users u ON u.uid = mpa.uid WHERE mpa.uid is not null AND mpas.unsubscribed IS NULL AND mpas.start <= '%s' AND mpas.end >= '%s'and mpa.partner = 'oi' AND u.mail LIKE '%soibusuu%s' AND mpa.msisdn like '55%s' AND mpas.current = 1;" % (end, beginning, "%","%","%"))
         data = cursor.fetchone()
         print 'Number of oi users that have a fake email address between %s and %s was ' % (beginning, end) + (str(data).replace("L,)","")).replace("(","")
         list.append(int((str(data).replace("L,)","")).replace("(","")))

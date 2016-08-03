@@ -78,11 +78,11 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of registered Tigo users with confirmed email at %s was ' % end + str(row).replace("L,", "").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("Total Confirmed Email")
+            list.append("Confirmed Email")
             writer.writerow(list)
 
         # TOTAL NUMBER OF NEW TIGO USERS
-        cursor.execute("SELECT substring(mpa.msisdn, 1,3), count(DISTINCT mpa.msisdn)FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id WHERE mpas.start >= '%s' AND mpas.start < '%s' AND mpa.partner = 'tigo' AND mpas.unsubscribed IS NULL AND mpas.provider_plan != 2 AND mpas.current = 1 group by 1;" % (beginning,end))
+        cursor.execute("SELECT substring(mpa.msisdn, 1,3), count(DISTINCT mpa.uid)FROM bs_mobile_partner_accounts mpa LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id WHERE mpas.start >= '%s' AND mpas.start < '%s' AND mpa.partner = 'tigo' AND mpas.unsubscribed IS NULL AND mpas.provider_plan != 2 AND mpas.current = 1 group by 1;" % (beginning,end))
         data = cursor.fetchall()
         for row in data:
             list = []
@@ -95,7 +95,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of newly registered Tigo users at %s was ' % end + str(row).replace("L,", "").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("New Users")
+            list.append("New Subscribers")
             writer.writerow(list)
 
         # TOTAL NUMBER OF TIGO USERS REQUESTED TO CANCEL
@@ -146,7 +146,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of registered Tigo users who have opened the app at %s was ' % end + str(row).replace("L,", "").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("Opened App")
+            list.append("Active Users")
             writer.writerow(list)
 
         # TOTAL NUMBER OF TIGO USERS THAT HAVE NOT OPENED THE APP
@@ -163,7 +163,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of registered Tigo users who have not opened app at %s was ' % end + str(row).replace("L,", "").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("NA Open App")
+            list.append("Inactive/ Not Opened")
             writer.writerow(list)
 
         # USERS IN SYSTEM NOT CANCELLED - # THAT THEY NEED TO PAY US FOR
@@ -180,7 +180,7 @@ with open('Tigo_report.csv', 'wb') as csvfile:
             print 'Number of registered Tigo users who have not cancelled and owe us at %s was ' % end + str(row).replace("L,","").replace("'", '')
             for piece in row:
                 list.append((str(piece).replace("L,", "").replace("'", "")))
-            list.append("Active Users (Chargeable)")
+            list.append("Chargeable Users")
             writer.writerow(list)
 
 

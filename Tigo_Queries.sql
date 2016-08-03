@@ -87,3 +87,15 @@ AND u.access < '%s'
 AND mpas.current = 1
 AND mpas.provider_plan != 2
 GROUP BY mpa.uid
+
+-- # USERS IN SYSTEM NOT CANCELLED - # THAT THEY NEED TO PAY US FOR
+SELECT mpa.uid, mpa.msisdn, mpas.start, mpas.end, mpas.unsubscribed
+FROM bs_mobile_partner_accounts mpa
+LEFT JOIN bs_mobile_partner_accounts_subscriptions mpas ON mpas.mpaid = mpa.id
+WHERE mpas.start < '2016-08-01'
+AND mpas.end >= '2015-07-01'
+AND mpas.unsubscribed IS NULL
+AND mpa.partner = 'tigo'
+AND mpas.current = 1
+AND mpas.provider_plan != 2
+GROUP BY mpa.msisdn

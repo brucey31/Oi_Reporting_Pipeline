@@ -25,8 +25,8 @@ RED_PASSWORD = config.get('Redshift Creds', 'password')
 
 
 start_day = 1
-end_day = calendar.monthrange(datetime.date.today().year, datetime.date.today().month)[1]
-month = datetime.date.today().month
+end_day = 31
+month = 8
 year = datetime.date.today().year
 
 start_date = datetime.date(year, month, start_day)
@@ -40,7 +40,7 @@ conn = psycopg2.connect(conn_string)
 cursor = conn.cursor()
 
 print "Deleting current stats for %s" % start_date
-cursor.execute("delete tigo_key_stats where month = '%s';" % start_date)
+cursor.execute("delete oi_key_stats where month = '%s';" % start_date)
 
 conn.commit()
 conn.close()

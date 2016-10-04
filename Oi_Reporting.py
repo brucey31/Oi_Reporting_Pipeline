@@ -25,8 +25,8 @@ RED_PASSWORD = config.get('Redshift Creds', 'password')
 
 
 start_day = 1
-end_day = 31
-month = 8
+end_day = calendar.monthrange(datetime.date.today().year, datetime.date.today().month)[1]
+month = datetime.date.today().month
 year = datetime.date.today().year
 
 start_date = datetime.date(year, month, start_day)

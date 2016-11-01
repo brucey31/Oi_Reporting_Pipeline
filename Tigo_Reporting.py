@@ -9,7 +9,7 @@ from subprocess import call
 import psycopg2
 import os
 
-start_day = calendar.monthrange(datetime.date.today().year, datetime.date.today().month)[0] + 1
+start_day = 1
 end_day = calendar.monthrange(datetime.date.today().year, datetime.date.today().month)[1]
 month = datetime.date.today().month
 year = datetime.date.today().year
@@ -35,12 +35,12 @@ RED_PASSWORD = config.get('Redshift Creds', 'password')
 
 # Connect to RedShift
 conn_string = "dbname=%s port=%s user=%s password=%s host=%s" %(RED_USER, RED_PORT, RED_USER, RED_PASSWORD, RED_HOST)
-print "Connecting to database\n        ->%s" % (conn_string)
+print "Connecting to database\n        ->%s" % conn_string
 conn = psycopg2.connect(conn_string)
 
 cursor = conn.cursor()
-
-cursor.execute("delete tigo_key_stats where month = %s;" % start_date)
+print "Deleting current stats for %s" % start_date
+cursor.execute("delete tigo_key_stats where month = '%s';" % start_date)
 
 conn.commit()
 conn.close()
